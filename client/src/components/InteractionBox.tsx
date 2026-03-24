@@ -152,16 +152,20 @@ export default function InteractionBox({
   }
 
   if (phase === "both_wrong") {
+    const hasMoreClues = clueIndex < 4;
     return (
       <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-2xl">
         <p className="text-orange-300 font-bold mb-4">
-          Both teams answered incorrectly. The answer will be revealed.
+          Both teams answered incorrectly.{" "}
+          {hasMoreClues
+            ? `Here comes clue ${clueIndex + 1}...`
+            : "The answer will now be revealed."}
         </p>
         <Button
-          onClick={onNextCharacter}
+          onClick={hasMoreClues ? onShowClue : onNextCharacter}
           className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 rounded-lg transition-all"
         >
-          Continue →
+          {hasMoreClues ? `Show Clue ${clueIndex + 1} →` : "Reveal Answer →"}
         </Button>
       </div>
     );
